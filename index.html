@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoadmapSnap — Turn Complex Program Roadmaps into Clear Visual Snapshots</title>
+  <meta name="description" content="RoadmapSnap is a lightweight, config-driven roadmap visualization tool. No backend, no build step. Visualize milestones, dependencies, and Gantt timelines in minutes." />
+  <meta name="keywords" content="program roadmap visualization tool, project roadmap html, interactive roadmap tool, PMO roadmap tool, milestone visualization software, dependency mapping roadmap, transformation roadmap software, static roadmap viewer, enterprise roadmap visualization" />
+  <meta name="author" content="RoadmapSnap" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://roadmapsnap.pages.dev" />
+  <meta property="og:title" content="RoadmapSnap — Turn Complex Program Roadmaps into Clear Visual Snapshots" />
+  <meta property="og:description" content="Config-driven roadmap dashboards for PMOs and enterprise teams. No backend. No build step." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://roadmapsnap.pages.dev" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RoadmapSnap — Visual Roadmap Dashboards, No Backend" />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"RoadmapSnap","description":"A lightweight, config-driven roadmap visualization tool for PMOs and enterprise teams.","url":"https://roadmapsnap.pages.dev","downloadUrl":"https://github.com/moises-prat-epm/RoadmapSnap","applicationCategory":"BusinessApplication","operatingSystem":"Any (browser-based)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT"}]}
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Palette — light & airy */
+      --ink:        #111827;
+      --ink-soft:   #374151;
+      --muted:      #6B7280;
+      --subtle:     #9CA3AF;
+      --rule:       #E5E7EB;
+      --surface:    #F9FAFB;
+      --white:      #FFFFFF;
+      --blue:       #2563EB;
+      --blue-light: #3B82F6;
+      --blue-pale:  #EFF6FF;
+      --blue-mid:   #DBEAFE;
+      --indigo:     #4F46E5;
+      --hero-bg:    #F0F4FF;
+      /* Nav dark strip */
+      --nav-bg:     #0F172A;
+
+      --radius:     10px;
+      --radius-lg:  16px;
+      --shadow-sm:  0 1px 4px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:     0 4px 16px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.04);
+      --shadow-lg:  0 12px 40px rgba(0,0,0,.10);
+
+      --font-body:    'Plus Jakarta Sans', sans-serif;
+      --font-serif:   'Instrument Serif', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--ink-soft); background: var(--white); line-height: 1.65; overflow-x: hidden; font-weight: 400; font-size: 16px; }
+
+    /* ── NAV ───────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      background: var(--nav-bg);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .nav-logo {
+      font-family: var(--font-body); font-weight: 600; font-size: 1.05rem;
+      color: #fff; text-decoration: none; letter-spacing: -.01em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo-dot { width: 8px; height: 8px; border-radius: 50%; background: #60A5FA; }
+    .nav-links { display: flex; gap: 6px; list-style: none; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,.6); text-decoration: none;
+      font-size: .83rem; font-weight: 400; padding: 5px 12px; border-radius: 6px;
+      transition: all .18s;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .nav-gh {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--blue); color: #fff !important;
+      padding: 6px 14px !important; border-radius: 7px !important;
+      font-weight: 500 !important; font-size: .83rem !important;
+    }
+    .nav-gh:hover { background: var(--blue-light) !important; }
+    .nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-mobile-toggle span { display: block; width: 20px; height: 1.5px; background: rgba(255,255,255,.7); margin: 4px 0; border-radius: 2px; transition: .2s; }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #EFF6FF 0%, #F5F3FF 40%, #F0F9FF 100%);
+      display: flex; align-items: center;
+      padding: 100px 5vw 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-blob-1 {
+      position: absolute; width: 700px; height: 700px;
+      top: -200px; right: -150px;
+      background: radial-gradient(circle, rgba(99,102,241,.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-blob-2 {
+      position: absolute; width: 500px; height: 500px;
+      bottom: -100px; left: -50px;
+      background: radial-gradient(circle, rgba(37,99,235,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-layout {
+      position: relative; display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center; max-width: 1180px; margin: 0 auto; width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); border: 1px solid var(--rule);
+      border-radius: 999px; padding: 4px 14px 4px 6px;
+      font-size: .75rem; font-weight: 500; color: var(--blue);
+      margin-bottom: 24px; box-shadow: var(--shadow-sm);
+    }
+    .hero-eyebrow-badge {
+      background: var(--blue); color: #fff;
+      font-size: .68rem; font-weight: 600; letter-spacing: .05em;
+      padding: 2px 8px; border-radius: 999px; text-transform: uppercase;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      font-weight: 400; /* Instrument Serif — naturally elegant at 400 */
+      line-height: 1.1; letter-spacing: -.01em;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub {
+      font-size: 1.025rem; color: var(--muted); font-weight: 300;
+      line-height: 1.75; margin-bottom: 36px; max-width: 460px;
+    }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--blue); color: #fff; text-decoration: none;
+      padding: 11px 24px; border-radius: var(--radius); font-weight: 500;
+      font-size: .9rem; transition: all .2s; border: none; cursor: pointer;
+      letter-spacing: -.01em;
+    }
+    .btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,.3); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--white); color: var(--ink-soft); text-decoration: none;
+      padding: 11px 24px; border-radius: var(--radius); font-weight: 400;
+      font-size: .9rem; border: 1px solid var(--rule); transition: all .2s;
+      letter-spacing: -.01em;
+    }
+    .btn-outline:hover { border-color: #CBD5E1; background: var(--surface); transform: translateY(-1px); }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 44px; padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .stat-val { font-family: var(--font-serif); font-size: 1.6rem; color: var(--ink); }
+    .stat-label { font-size: .75rem; color: var(--subtle); font-weight: 400; margin-top: 1px; }
+
+    /* Hero screenshot */
+    .hero-shot {
+      background: #fff; border: 1px solid var(--rule); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(37,99,235,.06);
+      overflow: hidden;
+    }
+    .shot-bar {
+      background: #F8FAFC; padding: 10px 14px;
+      display: flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .shot-dot { width: 9px; height: 9px; border-radius: 50%; }
+    .shot-dot.r { background: #FC8181; }
+    .shot-dot.y { background: #F6AD55; }
+    .shot-dot.g { background: #68D391; }
+    .shot-url { flex: 1; text-align: center; font-size: .66rem; color: var(--subtle); font-family: 'Courier New', monospace; }
+    .hero-shot img { display: block; width: 100%; }
+    .shot-fallback {
+      width: 100%; aspect-ratio: 16/10; display: none;
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 8px; background: var(--surface); color: var(--subtle); font-size: .82rem;
+    }
+    .shot-fallback a { color: var(--blue); text-decoration: none; }
+
+    /* ── SECTIONS ──────────────────────────────────────── */
+    section { padding: 88px 5vw; }
+    .container { max-width: 1140px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 14px;
+    }
+    .section-label::before { content:''; width:16px; height:1px; background:var(--blue); }
+    h2 {
+      font-family: var(--font-serif); font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      font-weight: 400; line-height: 1.18; letter-spacing: -.01em;
+      color: var(--ink); margin-bottom: 14px;
+    }
+    h2 em { font-style: italic; color: var(--blue); }
+    .lead { font-size: 1.025rem; color: var(--muted); font-weight: 300; line-height: 1.75; max-width: 560px; }
+    .center { text-align: center; }
+    .center .lead { margin: 0 auto; }
+    .section-divider { border: none; border-top: 1px solid var(--rule); margin: 0; }
+
+    /* ── PROBLEM ───────────────────────────────────────── */
+    #problem { background: var(--surface); }
+    .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; margin-top: 48px; }
+    .problem-card {
+      background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+      border: 1px solid var(--rule); box-shadow: var(--shadow-sm);
+      position: relative; overflow: hidden;
+    }
+    .problem-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#FDA4AF,#FCA5A5); }
+    .p-icon { font-size: 1.4rem; margin-bottom: 12px; }
+    .problem-card h3 { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .problem-card p { font-size: .84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+    /* ── FEATURES ──────────────────────────────────────── */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 16px; margin-top: 48px; }
+    .feature-card {
+      background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+      border: 1px solid var(--rule); box-shadow: var(--shadow-sm);
+      transition: all .24s;
+    }
+    .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--blue-mid); }
+    .f-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--blue-pale); display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; margin-bottom: 14px;
+    }
+    .feature-card h3 { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .feature-card p { font-size: .84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+    /* ── SCREENSHOTS ───────────────────────────────────── */
+    #screenshots { background: #F8FAFF; }
+    .screen-card {
+      background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius-lg);
+      overflow: hidden; box-shadow: var(--shadow); margin-top: 48px;
+      transition: box-shadow .3s;
+    }
+    .screen-card:hover { box-shadow: var(--shadow-lg); }
+    .screen-hdr {
+      padding: 12px 18px; background: var(--surface); border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .screen-hdr .dots { display: flex; gap: 5px; }
+    .screen-hdr-title { font-size: .78rem; font-weight: 500; color: var(--muted); margin-left: 8px; }
+    .screen-hdr-tag {
+      margin-left: auto; background: var(--blue-pale); color: var(--blue);
+      border-radius: 999px; padding: 2px 10px; font-size: .66rem; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .screen-card img { display: block; width: 100%; }
+    .screen-img-err {
+      width: 100%; aspect-ratio: 21/9; display: none;
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 8px; background: var(--surface); color: var(--subtle); font-size: .82rem;
+    }
+    .screen-img-err a { color: var(--blue); text-decoration: none; }
+    .screen-feats {
+      padding: 16px 20px; display: flex; gap: 18px; flex-wrap: wrap;
+      border-top: 1px solid var(--rule);
+    }
+    .sf { display: flex; align-items: center; gap: 5px; font-size: .8rem; color: var(--muted); font-weight: 400; }
+    .sf::before { content: '✓'; color: var(--blue); font-weight: 600; }
+    .demo-strip {
+      margin-top: 24px; background: var(--blue-pale); border: 1px solid var(--blue-mid);
+      border-radius: var(--radius-lg); padding: 22px 28px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .demo-strip h3 { font-size: .95rem; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+    .demo-strip p { font-size: .84rem; color: var(--muted); font-weight: 300; }
+
+    /* ── HOW IT WORKS ──────────────────────────────────── */
+    #how { background: var(--surface); }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-top: 48px; }
+    .step-card {
+      background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+      border: 1px solid var(--rule); box-shadow: var(--shadow-sm);
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--blue-pale); display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 600; color: var(--blue); margin-bottom: 14px;
+    }
+    .step-card h3 { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .step-card p { font-size: .84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .workflow-viz {
+      display: flex; align-items: center; margin-top: 36px;
+      background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius-lg);
+      padding: 20px 24px; overflow-x: auto; gap: 0; box-shadow: var(--shadow-sm);
+    }
+    .wf-node { flex: 1; text-align: center; min-width: 80px; }
+    .wf-bubble {
+      width: 36px; height: 36px; border-radius: 50%; margin: 0 auto 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 600; color: #fff;
+    }
+    .wf-name { font-size: .66rem; color: var(--muted); font-weight: 400; line-height: 1.3; }
+    .wf-sub { font-size: .58rem; color: var(--subtle); }
+    .wf-arrow { color: var(--rule); flex-shrink: 0; padding: 0 4px; margin-bottom: 20px; font-size: .9rem; }
+
+    /* ── USER GUIDE ────────────────────────────────────── */
+    #guide {
+      background: var(--white);
+    }
+    .guide-intro { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; margin-top: 56px; }
+    .guide-toc {
+      position: sticky; top: 80px;
+      background: var(--surface); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); padding: 20px 20px;
+    }
+    .guide-toc-title { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .guide-toc-list { list-style: none; }
+    .guide-toc-list li { border-bottom: 1px solid var(--rule); }
+    .guide-toc-list li:last-child { border-bottom: none; }
+    .guide-toc-list a {
+      display: block; padding: 9px 0; font-size: .83rem; font-weight: 400;
+      color: var(--muted); text-decoration: none; transition: color .18s;
+    }
+    .guide-toc-list a:hover { color: var(--blue); }
+    .guide-toc-list a.active { color: var(--blue); font-weight: 500; }
+
+    .guide-content { }
+    .guide-section { margin-bottom: 64px; }
+    .guide-section:last-child { margin-bottom: 0; }
+    .guide-section-title {
+      font-family: var(--font-serif); font-size: 1.55rem; font-weight: 400;
+      color: var(--ink); margin-bottom: 6px; line-height: 1.25;
+    }
+    .guide-section-sub { font-size: .875rem; color: var(--muted); font-weight: 300; margin-bottom: 28px; line-height: 1.65; }
+    .guide-rule { border: none; border-top: 1px solid var(--rule); margin: 36px 0; }
+
+    /* Code blocks in guide */
+    .code-wrap {
+      background: #0F172A; border-radius: var(--radius-lg); overflow: hidden;
+      margin: 20px 0; box-shadow: var(--shadow);
+    }
+    .code-top {
+      padding: 9px 16px; background: rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .code-filename { font-size: .72rem; color: rgba(255,255,255,.4); font-family: 'Courier New', monospace; }
+    .code-lang { font-size: .66rem; color: rgba(255,255,255,.25); text-transform: uppercase; letter-spacing: .08em; }
+    .code-wrap pre {
+      padding: 18px 20px; font-family: 'Courier New', monospace;
+      font-size: .82rem; line-height: 1.8; color: #CBD5E1; overflow-x: auto; white-space: pre;
+    }
+    .ck { color: #93C5FD; }   /* key */
+    .cs { color: #A5F3FC; }   /* string */
+    .cv { color: #FCA5A5; }   /* boolean/value */
+    .cm { color: #475569; }   /* comment */
+    .cc { color: #86EFAC; }   /* cyan highlight */
+
+    /* Callout boxes */
+    .callout {
+      border-radius: var(--radius); padding: 16px 18px; margin: 20px 0;
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: .875rem; line-height: 1.6;
+    }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body h4 { font-size: .85rem; font-weight: 600; margin-bottom: 3px; }
+    .callout-body p { font-weight: 300; }
+    .callout.tip { background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; }
+    .callout.info { background: var(--blue-pale); border: 1px solid var(--blue-mid); color: #1E40AF; }
+    .callout.warn { background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; }
+
+    /* Guide step list */
+    .guide-steps { list-style: none; margin: 16px 0; }
+    .guide-steps li {
+      display: flex; gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid var(--rule); align-items: flex-start;
+    }
+    .guide-steps li:last-child { border-bottom: none; }
+    .gs-num {
+      width: 24px; height: 24px; flex-shrink: 0;
+      background: var(--blue-pale); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 600; color: var(--blue);
+    }
+    .gs-body { flex: 1; }
+    .gs-title { font-size: .875rem; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+    .gs-desc { font-size: .84rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+    code.inline { font-family: 'Courier New', monospace; font-size: .82em; background: #F1F5F9; color: var(--blue); padding: 1px 6px; border-radius: 4px; }
+
+    /* Feature table */
+    .guide-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .84rem; }
+    .guide-table th { background: var(--surface); text-align: left; padding: 10px 14px; font-weight: 600; color: var(--ink); border-bottom: 2px solid var(--rule); font-size: .78rem; }
+    .guide-table td { padding: 10px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); font-weight: 300; }
+    .guide-table tr:last-child td { border-bottom: none; }
+    .guide-table code { font-family: 'Courier New', monospace; font-size: .82em; background: #F1F5F9; color: var(--blue); padding: 1px 5px; border-radius: 4px; }
+    .tag-req { background: #FEF2F2; color: #DC2626; font-size: .68rem; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+    .tag-opt { background: #F0FDF4; color: #16A34A; font-size: .68rem; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+
+    /* Guide 2-col layout for short items */
+    .guide-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    @media(max-width:680px){ .guide-2col { grid-template-columns: 1fr; } }
+    .mini-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 16px; font-size: .84rem;
+    }
+    .mini-card h4 { font-size: .84rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; display: flex; align-items: center; gap: 7px; }
+    .mini-card p { color: var(--muted); font-weight: 300; line-height: 1.55; }
+
+    /* ── USE CASES ─────────────────────────────────────── */
+    #usecases { background: var(--surface); }
+    .uc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px,1fr)); gap: 16px; margin-top: 48px; }
+    .uc-card {
+      background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+      border: 1px solid var(--rule); box-shadow: var(--shadow-sm);
+      display: flex; gap: 16px; transition: all .24s;
+    }
+    .uc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .uc-icon { width: 44px; height: 44px; flex-shrink: 0; border-radius: var(--radius); background: var(--blue-pale); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+    .uc-card h3 { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .uc-card p { font-size: .84rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+    /* ── INSTALLATION ──────────────────────────────────── */
+    #installation { background: var(--white); }
+    .install-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 16px; margin-top: 48px; }
+    .install-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-lg);
+      padding: 24px; transition: border-color .2s;
+    }
+    .install-card:hover { border-color: var(--blue-mid); }
+    .install-card h3 { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+    .code-block {
+      background: #0F172A; border-radius: var(--radius); padding: 14px 16px;
+      font-family: 'Courier New', monospace; font-size: .79rem; color: #94A3B8;
+      line-height: 1.75; margin: 12px 0;
+    }
+    .code-block .cmd { color: #CBD5E1; }
+    .code-block .cmt { color: #475569; }
+    .ist { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: .84rem; color: var(--muted); }
+    .ist-n {
+      width: 20px; height: 20px; flex-shrink: 0;
+      background: var(--blue-pale); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .66rem; font-weight: 600; color: var(--blue);
+    }
+
+    /* ── FAQ ───────────────────────────────────────────── */
+    #faq { background: var(--surface); }
+    .faq-list { margin-top: 48px; max-width: 720px; }
+    .faq-item { background: var(--white); border-radius: var(--radius); border: 1px solid var(--rule); margin-bottom: 8px; overflow: hidden; }
+    .faq-q {
+      width: 100%; background: none; border: none; padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; text-align: left; font-family: var(--font-body);
+      font-size: .875rem; font-weight: 500; color: var(--ink); transition: background .18s;
+    }
+    .faq-q:hover { background: var(--surface); }
+    .faq-ch { transition: transform .26s; font-style: normal; color: var(--muted); }
+    .faq-item.open .faq-ch { transform: rotate(180deg); }
+    .faq-a { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .18s; font-size: .875rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .faq-item.open .faq-a { max-height: 220px; padding: 0 20px 16px; }
+
+    /* ── CTA ───────────────────────────────────────────── */
+    #cta {
+      background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 50%, #2563EB 100%);
+      text-align: center; color: #fff; padding: 88px 5vw;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    #cta h2 { color: #fff; position: relative; font-size: clamp(1.8rem,3vw,2.8rem); }
+    #cta .lead { color: rgba(255,255,255,.65); margin: 0 auto 36px; position: relative; font-weight: 300; }
+    .cta-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #fff; color: var(--blue); text-decoration: none;
+      padding: 11px 24px; border-radius: var(--radius); font-weight: 500; font-size: .9rem;
+      transition: all .2s;
+    }
+    .btn-white:hover { background: #EFF6FF; transform: translateY(-1px); }
+    .btn-ghost-white {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.1); color: #fff; text-decoration: none;
+      padding: 11px 24px; border-radius: var(--radius); font-weight: 400; font-size: .9rem;
+      border: 1px solid rgba(255,255,255,.2); transition: all .2s;
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,.18); transform: translateY(-1px); }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer { background: var(--nav-bg); padding: 44px 5vw 28px; }
+    .footer-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-weight: 500; font-size: 1rem; color: #fff; display: flex; align-items: center; gap: 7px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: rgba(255,255,255,.4); text-decoration: none; font-size: .82rem; transition: color .18s; }
+    .footer-links a:hover { color: rgba(255,255,255,.75); }
+    .footer-copy { font-size: .75rem; color: rgba(255,255,255,.22); width: 100%; text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.06); font-weight: 300; }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media(max-width:980px) {
+      .hero-layout { grid-template-columns: 1fr; }
+      .hero-shot { display: none; }
+      .guide-intro { grid-template-columns: 1fr; }
+      .guide-toc { position: static; }
+      nav .nav-links li:not(:last-child) { display: none; }
+    }
+    @media(max-width:600px) {
+      section { padding: 60px 5vw; }
+      .hero-stats { flex-wrap: wrap; gap: 16px; }
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────── */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
+
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav aria-label="Main navigation">
+  <a href="#hero" class="nav-logo"><span class="nav-logo-dot"></span>RoadmapSnap</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#guide">User Guide</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#installation">Install</a></li>
+    <li>
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener" class="nav-gh">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ HERO -->
+
+<section id="hero" aria-labelledby="hero-title">
+  <div class="hero-blob-1" aria-hidden="true"></div>
+  <div class="hero-blob-2" aria-hidden="true"></div>
+  <div class="hero-layout">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-badge">Open Source</span>
+        MIT License · No backend required
+      </div>
+      <h1 id="hero-title">Roadmap dashboards that<br>your stakeholders <em>actually read</em></h1>
+      <p class="hero-sub">RoadmapSnap turns a single config file into a live Gantt dashboard with milestones, dependency graphs, KPI cards, and one-click exports. Edit and refresh — no build step, ever.</p>
+      <div class="hero-actions">
+        <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+        <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener" class="btn-outline">Live demo →</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">0 <span style="font-family:var(--font-body);font-size:1rem;color:var(--muted);font-weight:300">build steps</span></div><div class="stat-label">Open in browser immediately</div></div>
+        <div><div class="stat-val">1 <span style="font-family:var(--font-body);font-size:1rem;color:var(--muted);font-weight:300">file to edit</span></div><div class="stat-label">config.js controls everything</div></div>
+        <div><div class="stat-val">MIT <span style="font-family:var(--font-body);font-size:1rem;color:var(--muted);font-weight:300">licensed</span></div><div class="stat-label">Free for commercial use</div></div>
+      </div>
+    </div>
+    <!-- Real screenshot from repo -->
+    <div>
+      <div class="hero-shot">
+        <div class="shot-bar">
+          <div class="shot-dot r"></div><div class="shot-dot y"></div><div class="shot-dot g"></div>
+          <div class="shot-url">roadmapsnap.pages.dev</div>
+        </div>
+        <img
+          src="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview.png"
+          alt="RoadmapSnap dashboard: KPI cards, Gantt timeline with milestone diamonds, and grouped workstreams"
+          loading="eager"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="shot-fallback">
+          <span>Screenshot loads on the deployed page</span>
+          <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener">Open live demo ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ PROBLEM -->
+
+<section id="problem" aria-labelledby="problem-title">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2 id="problem-title">Program roadmaps fail before they're presented</h2>
+    <p class="lead">The tools exist. The problem is that none of them are fast, free, and stakeholder-ready without IT involvement.</p>
+    <div class="problem-grid">
+      <div class="problem-card fade-in"><div class="p-icon">🗂️</div><h3>Spreadsheet entropy</h3><p>Excel timelines collapse under real program complexity. Dates drift, formulas break, and the "latest version" is never the one being shown.</p></div>
+      <div class="problem-card fade-in"><div class="p-icon">🔗</div><h3>Hidden dependencies</h3><p>Blocking relationships between workstreams live in someone's head or buried in meeting notes — never in the roadmap itself.</p></div>
+      <div class="problem-card fade-in"><div class="p-icon">📊</div><h3>Executive translation gap</h3><p>What you track in detail and what leadership needs to see are two different things. Most tools force you to maintain both separately.</p></div>
+      <div class="problem-card fade-in"><div class="p-icon">🔧</div><h3>Infrastructure overhead</h3><p>SaaS tools need procurement, licenses, and IT onboarding. You want a roadmap dashboard, not a six-week setup project.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FEATURES -->
+
+<section id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-label">Features</div>
+    <h2 id="features-title">Everything in one <em>config file</em></h2>
+    <p class="lead">Define deliverables, milestones, dependencies, and metadata in <code class="inline">js/config.js</code>. RoadmapSnap renders the rest.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-in"><div class="f-icon">🎯</div><h3>Configurable workflow</h3><p>Define any lifecycle as alternating states and milestones. Status auto-calculates — no manual updates after initial setup.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">🔗</div><h3>Dependency graph</h3><p>Recursive dependency visualization with directional arrows. Simple strings or precise milestone-to-milestone links.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">📅</div><h3>Gantt timeline</h3><p>3, 6, or 12-month zoom. Milestone diamonds overlaid on bars. Group rows, sort, filter, and search — all in-browser.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">📤</div><h3>Export to PNG / CSV / JSON</h3><p>Presentation-ready snapshot in one click. No screen capture required — the export is clean and properly sized.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">📊</div><h3>Executive KPI cards</h3><p>Auto-tallied counts of total, in-progress, done, and at-risk items. Click any card to filter the timeline instantly.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">🏷️</div><h3>Tags &amp; search</h3><p>Attach tags to deliverables and search across the full roadmap in real time. Filter by team, priority, or any custom label.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">⚠️</div><h3>Risk &amp; descope flags</h3><p>Mark items as at-risk or descoped. Visual indicators surface problems immediately — no need to read through every row.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">🔒</div><h3>Works offline &amp; privately</h3><p>No data leaves your machine. Run from a shared drive, internal intranet, or private GitHub repo for sensitive programs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ SCREENSHOTS -->
+
+<section id="screenshots" aria-labelledby="screenshots-title">
+  <div class="container">
+    <div class="section-label">Real Tool · Real Screens</div>
+    <h2 id="screenshots-title">The actual dashboard</h2>
+    <p class="lead">No mock-ups. This is a live screenshot from a deployed RoadmapSnap instance.</p>
+
+```
+<div class="screen-card fade-in">
+  <div class="screen-hdr">
+    <div class="dots"><div class="shot-dot r"></div><div class="shot-dot y"></div><div class="shot-dot g"></div></div>
+    <span class="screen-hdr-title">RoadmapSnap — Main Dashboard View</span>
+    <span class="screen-hdr-tag">Live Preview</span>
+  </div>
+  <img
+    src="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview.png"
+    alt="Full RoadmapSnap dashboard: KPI summary cards, interactive Gantt timeline with coloured deliverable bars, milestone diamond markers, group streams, and today-line indicator"
+    loading="lazy"
+    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+  />
+  <div class="screen-img-err">
+    <span>Screenshot loads on the deployed page</span>
+    <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener">Open live demo ↗</a>
+  </div>
+  <div class="screen-feats">
+    <div class="sf">Auto-calculated KPI cards</div>
+    <div class="sf">Milestone diamond markers</div>
+    <div class="sf">Group / stream rows</div>
+    <div class="sf">Today-line indicator</div>
+    <div class="sf">Click-to-filter KPIs</div>
+    <div class="sf">At-risk visual flags</div>
+  </div>
+</div>
+
+<div class="demo-strip fade-in">
+  <div>
+    <h3>Explore the full interactive experience</h3>
+    <p>Dependency graph, dark mode, export panel, timeline zoom, filter bar — all live.</p>
+  </div>
+  <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener" class="btn-primary" style="flex-shrink:0">Open live demo →</a>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ HOW IT WORKS -->
+
+<section id="how" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 id="how-title">How it works</h2>
+    <p class="lead">One config file. One HTML file. Everything else is rendered in the browser.</p>
+    <div class="steps-grid">
+      <div class="step-card fade-in"><div class="step-num">1</div><h3>Edit config.js</h3><p>Define deliverables, groups, milestone dates, dependencies, and metadata. Use the sample project to learn the format.</p></div>
+      <div class="step-card fade-in"><div class="step-num">2</div><h3>Configure your workflow</h3><p>Set up the lifecycle that matches your program — states, milestones, colors, and labels are all yours to define.</p></div>
+      <div class="step-card fade-in"><div class="step-num">3</div><h3>Open index.html</h3><p>The engine reads your config and renders KPI cards, Gantt timeline, and dependency graph. No server, no compile step.</p></div>
+      <div class="step-card fade-in"><div class="step-num">4</div><h3>Deploy anywhere</h3><p>GitHub Pages, Cloudflare Pages, Netlify, shared drive, or internal intranet. Static HTML goes everywhere.</p></div>
+    </div>
+    <div class="workflow-viz" aria-label="Example milestone lifecycle">
+      <div class="wf-node"><div class="wf-bubble" style="background:#CBD5E1">NS</div><div class="wf-name">Not Started</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#7C3AED">M0</div><div class="wf-name">Dev Start<div class="wf-sub">Kickoff</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#2563EB">DEV</div><div class="wf-name">In Dev</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#059669">M1</div><div class="wf-name">Dev Complete<div class="wf-sub">Code freeze</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#D97706">M2</div><div class="wf-name">UAT Complete<div class="wf-sub">Signed off</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#DC2626">M3</div><div class="wf-name">Production<div class="wf-sub">Go live</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#16A34A">✓</div><div class="wf-name">Done</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ USER GUIDE -->
+
+<section id="guide" aria-labelledby="guide-title">
+  <div class="container">
+    <div class="section-label">User Guide</div>
+    <h2 id="guide-title">Complete configuration <em>reference</em></h2>
+    <p class="lead">Everything you need to go from a blank template to a fully working program roadmap, step by step.</p>
+
+```
+<div class="guide-intro">
+  <!-- Sticky TOC -->
+  <aside>
+    <div class="guide-toc">
+      <div class="guide-toc-title">In this guide</div>
+      <ul class="guide-toc-list">
+        <li><a href="#g-structure">Project structure</a></li>
+        <li><a href="#g-deliverables">Defining deliverables</a></li>
+        <li><a href="#g-milestones">Setting milestones</a></li>
+        <li><a href="#g-dependencies">Tracking dependencies</a></li>
+        <li><a href="#g-tags">Tagging for search</a></li>
+        <li><a href="#g-links">Linking to Jira / Confluence</a></li>
+        <li><a href="#g-risk">Risk &amp; descope flags</a></li>
+        <li><a href="#g-groups">Groups &amp; ordering</a></li>
+        <li><a href="#g-workflow">Custom workflows</a></li>
+        <li><a href="#g-timeline">Timeline settings</a></li>
+        <li><a href="#g-labels">Custom labels</a></li>
+        <li><a href="#g-export">Exporting &amp; sharing</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="guide-content">
+
+    <!-- ── Project Structure ── -->
+    <div class="guide-section" id="g-structure">
+      <div class="guide-section-title">Project structure</div>
+      <p class="guide-section-sub">After cloning, you'll find two starter config files. Use <code class="inline">config_base.js</code> as your blank slate and <code class="inline">config.js</code> as a fully populated reference.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">repository root</span><span class="code-lang">tree</span></div>
+        <pre>RoadmapSnap/
+```
+
+├── index.html          <span class="cm"># the rendering engine — never edit this</span>
+├── js/
+│   ├── config.js       <span class="cm"># ← your roadmap lives here</span>
+│   └── config_base.js  <span class="cm"># blank template to start from</span>
+├── css/                <span class="cm"># styles (customise for branding)</span>
+└── docs/
+└── preview.png</pre>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>Start from the base template</h4>
+<p>Copy <code class="inline">config_base.js</code> over <code class="inline">config.js</code> to start clean. Study <code class="inline">config.js</code> (the e-commerce sample) whenever you need a working example of any feature.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Deliverables ── -->
+    <div class="guide-section" id="g-deliverables">
+      <div class="guide-section-title">Defining deliverables</div>
+      <p class="guide-section-sub">Each item in the <code class="inline">DELIVERABLES</code> array represents one row in your timeline. The only two required fields are <code class="inline">name</code> and <code class="inline">milestones</code>.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>DELIVERABLES: [
+```
+
+{
+<span class="ck">name</span>:  <span class="cs">“User Authentication”</span>,  <span class="cm">// required — must be unique</span>
+<span class="ck">group</span>: <span class="cs">“Backend”</span>,             <span class="cm">// optional — groups rows together</span>
+<span class="ck">milestones</span>: {              <span class="cm">// required — at least one date</span>
+M0: <span class="cs">“01/03/2026”</span>,
+M1: <span class="cs">“30/03/2026”</span>,
+M3: <span class="cs">“01/05/2026”</span>
+}
+}
+]</pre>
+</div>
+<table class="guide-table">
+<thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>name</code></td><td>string</td><td><span class="tag-req">Required</span></td><td>Unique identifier and label shown in the timeline row</td></tr>
+<tr><td><code>group</code></td><td>string</td><td><span class="tag-opt">Optional</span></td><td>Organises rows under a labelled group/stream header</td></tr>
+<tr><td><code>milestones</code></td><td>object</td><td><span class="tag-req">Required</span></td><td>Key-value pairs of milestone key → date (DD/MM/YYYY)</td></tr>
+<tr><td><code>showInTimeline</code></td><td>boolean</td><td><span class="tag-opt">Optional</span></td><td>Set to <code>false</code> to hide the row from the Gantt (default: true)</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Milestones ── -->
+    <div class="guide-section" id="g-milestones">
+      <div class="guide-section-title">Setting milestones</div>
+      <p class="guide-section-sub">Milestone keys must match the keys defined in your <code class="inline">WORKFLOW</code>. Status (Not Started / In Dev / Done / etc.) is <strong>automatically calculated</strong> at runtime based on which milestone dates have passed relative to today.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre><span class="cm">// Milestones use DD/MM/YYYY format</span>
+```
+
+milestones: {
+M0: <span class="cs">“01/03/2026”</span>,   <span class="cm">// Dev kickoff</span>
+M1: <span class="cs">“28/03/2026”</span>,   <span class="cm">// Dev complete</span>
+M2: <span class="cs">“18/04/2026”</span>,   <span class="cm">// UAT signed off</span>
+M3: <span class="cs">“05/05/2026”</span>    <span class="cm">// Go live — you don’t need all milestones</span>
+}</pre>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>You don’t need every milestone</h4>
+<p>A deliverable only needs the milestone dates that are relevant to it. If an item has no <code class="inline">M2</code> date it will simply skip from M1 to M3 in the status calculation.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Dependencies ── -->
+    <div class="guide-section" id="g-dependencies">
+      <div class="guide-section-title">Tracking dependencies</div>
+      <p class="guide-section-sub">Dependencies tell RoadmapSnap which deliverables are blocked by others. They are visualised as a recursive arrow graph in the dependency view. There are two ways to define them.</p>
+
+      <div class="guide-2col">
+        <div class="mini-card">
+          <h4>Simple dependency</h4>
+          <p>A string with another deliverable's exact name. Links the <em>last milestone</em> of that deliverable to the <em>start (M0)</em> of this one.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Advanced dependency</h4>
+          <p>An object with <code class="inline">task</code>, <code class="inline">from</code>, and <code class="inline">to</code> to link specific milestones between two deliverables.</p>
+        </div>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“API Gateway”</span>,
+dependencies: [
+
+```
+<span class="cm">// Simple: "Database Setup" M3 → "API Gateway" M0</span>
+<span class="cs">"Database Setup"</span>,
+
+<span class="cm">// Advanced: "Auth Service" M1 must complete before</span>
+<span class="cm">// "API Gateway" M1 can start</span>
+{ <span class="ck">task</span>: <span class="cs">"Auth Service"</span>, <span class="ck">from</span>: <span class="cs">"M1"</span>, <span class="ck">to</span>: <span class="cs">"M1"</span> },
+
+<span class="cm">// Another example: DB migration M2 → this item's M1</span>
+{ <span class="ck">task</span>: <span class="cs">"DB Migration"</span>, <span class="ck">from</span>: <span class="cs">"M2"</span>, <span class="ck">to</span>: <span class="cs">"M1"</span> }
+```
+
+],
+milestones: { M0: <span class="cs">“15/03/2026”</span>, M1: <span class="cs">“20/04/2026”</span>, M3: <span class="cs">“10/05/2026”</span> }
+}</pre>
+</div>
+
+```
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Names must match exactly</h4>
+          <p>The <code class="inline">task</code> string (or the simple string) must be the exact <code class="inline">name</code> of another deliverable in the same config — including case and spacing. A mismatch silently omits the dependency arrow.</p>
+        </div>
+      </div>
+
+      <ul class="guide-steps">
+        <li><div class="gs-num">1</div><div class="gs-body"><div class="gs-title">Identify the blocking deliverable</div><div class="gs-desc">Find the deliverable whose completion gates another one. Note its exact <code class="inline">name</code> value.</div></div></li>
+        <li><div class="gs-num">2</div><div class="gs-body"><div class="gs-title">Choose simple or advanced</div><div class="gs-desc">Use a plain string if the default "last milestone → M0" link is sufficient. Use the object form to connect specific milestones.</div></div></li>
+        <li><div class="gs-num">3</div><div class="gs-body"><div class="gs-title">Add to the dependencies array</div><div class="gs-desc">You can mix strings and objects freely in the same array. Multiple dependencies per deliverable are fully supported.</div></div></li>
+        <li><div class="gs-num">4</div><div class="gs-body"><div class="gs-title">Check the dependency view</div><div class="gs-desc">Reload and switch to the dependency graph tab. Arrows will appear between the linked milestones, and blocked items will be highlighted.</div></div></li>
+      </ul>
+    </div>
+    <hr class="guide-rule" />
+
+    <!-- ── Tags ── -->
+    <div class="guide-section" id="g-tags">
+      <div class="guide-section-title">Tagging deliverables for easy search</div>
+      <p class="guide-section-sub">Tags are free-form strings attached to any deliverable. They make the real-time search bar significantly more useful — especially when a program has 40+ rows.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“Payment Processing”</span>,
+<span class="ck">tags</span>: [<span class="cs">“P0”</span>, <span class="cs">“finance”</span>, <span class="cs">“external-vendor”</span>, <span class="cs">“PCI-DSS”</span>],
+milestones: { M0: <span class="cs">“01/04/2026”</span>, M1: <span class="cs">“30/04/2026”</span> }
+}</pre>
+</div>
+<div class="guide-2col">
+<div class="mini-card"><h4>🏷️ Priority tags</h4><p>Use <code class="inline">“P0”</code>, <code class="inline">“P1”</code> to quickly filter by business priority. Search “P0” to see all critical items.</p></div>
+<div class="mini-card"><h4>👥 Team tags</h4><p>Add the owning team: <code class="inline">“platform-team”</code>, <code class="inline">“data-eng”</code>. Filter the roadmap to one team’s scope instantly.</p></div>
+<div class="mini-card"><h4>📦 Domain tags</h4><p>Label by domain: <code class="inline">“security”</code>, <code class="inline">“frontend”</code>, <code class="inline">“compliance”</code>. Useful for cross-functional reporting.</p></div>
+<div class="mini-card"><h4>🔗 Integration tags</h4><p>Mark external dependencies: <code class="inline">“vendor-X”</code>, <code class="inline">“API-v2”</code>. Filter to see all third-party blocked items at once.</p></div>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>Search works across names AND tags</h4>
+<p>The search bar in the dashboard finds matches in both the deliverable <code class="inline">name</code> and its <code class="inline">tags</code> array simultaneously. You don’t need to be precise — partial matches work.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Links ── -->
+    <div class="guide-section" id="g-links">
+      <div class="guide-section-title">Linking to Jira, Confluence &amp; other tools</div>
+      <p class="guide-section-sub">The <code class="inline">link</code> field attaches a clickable icon to any deliverable row in the timeline. Use it to point directly to the Jira epic, Confluence page, or any other URL relevant to that item.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“Data Warehouse Setup”</span>,
+tags: [<span class="cs">“data-eng”</span>, <span class="cs">“P0”</span>],
+
+<span class="cm">// Links to a Jira epic</span>
+<span class="ck">link</span>: <span class="cs">“https://your-org.atlassian.net/browse/DATA-142”</span>,
+
+milestones: { M0: <span class="cs">“01/02/2026”</span>, M1: <span class="cs">“28/02/2026”</span> }
+},
+{
+name: <span class="cs">“Auth & SSO”</span>,
+
+<span class="cm">// Links to a Confluence design doc</span>
+<span class="ck">link</span>: <span class="cs">“https://your-org.atlassian.net/wiki/spaces/ARCH/pages/123456”</span>,
+
+milestones: { M0: <span class="cs">“10/02/2026”</span>, M1: <span class="cs">“15/03/2026”</span>, M3: <span class="cs">“01/04/2026”</span> }
+}</pre>
+</div>
+<div class="guide-2col">
+<div class="mini-card"><h4>🎫 Jira epics & stories</h4><p>Link directly to the epic or story covering this deliverable. Stakeholders can drill in without asking the PM for the ticket number.</p></div>
+<div class="mini-card"><h4>📄 Confluence pages</h4><p>Point to the design document, PRD, or decision log. Makes the roadmap a genuine entry point to all program artefacts.</p></div>
+<div class="mini-card"><h4>📁 SharePoint / Drive</h4><p>Any HTTPS URL works — SharePoint folders, Google Drive docs, Monday boards, Notion pages.</p></div>
+<div class="mini-card"><h4>🔗 One link per deliverable</h4><p>Only one <code class="inline">link</code> is supported per row. Use the most useful destination — typically the Jira epic or the Confluence spec page.</p></div>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>The icon appears inline in the timeline row</h4>
+<p>When a <code class="inline">link</code> is set, a small info icon appears next to the deliverable name. Clicking it opens the URL in a new tab. It doesn’t affect the bar or milestone rendering.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Risk & Descope ── -->
+    <div class="guide-section" id="g-risk">
+      <div class="guide-section-title">Risk &amp; descope flags</div>
+      <p class="guide-section-sub">Two boolean flags let you surface delivery risk and scope changes visually — without touching the Gantt bars or milestone dates.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“Mobile App v2”</span>,
+<span class="ck">atRisk</span>:   <span class="cv">true</span>,   <span class="cm">// shows a ⚠️ risk indicator on the row</span>
+<span class="ck">descoped</span>: <span class="cv">false</span>,  <span class="cm">// strikes through and greys out the row</span>
+milestones: { M0: <span class="cs">“01/05/2026”</span>, M1: <span class="cs">“30/06/2026”</span> }
+},
+{
+name: <span class="cs">“Legacy Portal Shutdown”</span>,
+<span class="ck">atRisk</span>:   <span class="cv">false</span>,
+<span class="ck">descoped</span>: <span class="cv">true</span>,   <span class="cm">// removed from scope — shown crossed out</span>
+milestones: { M0: <span class="cs">“01/03/2026”</span> }
+}</pre>
+</div>
+<div class="guide-2col">
+<div class="mini-card"><h4>⚠️ atRisk: true</h4><p>Adds a visible risk indicator to the timeline row. The item still counts in the “at risk” KPI card. Click the KPI card to filter to all at-risk items.</p></div>
+<div class="mini-card"><h4>🚫 descoped: true</h4><p>Strikes through the row and renders it grey. The item is still visible (useful for auditing scope changes) but excluded from active KPI counts.</p></div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Groups ── -->
+    <div class="guide-section" id="g-groups">
+      <div class="guide-section-title">Groups &amp; ordering</div>
+      <p class="guide-section-sub">Groups organise the timeline into labelled stream sections. Use <code class="inline">GROUP_ORDER</code> to control how they appear top-to-bottom. Groups not listed will appear alphabetically after the explicitly ordered ones.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre><span class="cm">// Controls top-to-bottom stream order in the timeline</span>
+```
+
+<span class="ck">GROUP_ORDER</span>: [<span class="cs">“Data Platform”</span>, <span class="cs">“Integration”</span>, <span class="cs">“Frontend”</span>, <span class="cs">“Infrastructure”</span>],
+
+<span class="cm">// Groups listed here won’t appear in the filter dropdown</span>
+<span class="ck">NON_FILTERABLE_GROUPS</span>: [<span class="cs">“Infrastructure”</span>, <span class="cs">“Planning”</span>]</pre>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>Use NON_FILTERABLE_GROUPS for overhead items</h4>
+<p>Infrastructure, planning, and governance work often shouldn’t appear in team-level filters. Add these group names to <code class="inline">NON_FILTERABLE_GROUPS</code> and they’ll always show but won’t appear as filter options.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Workflow ── -->
+    <div class="guide-section" id="g-workflow">
+      <div class="guide-section-title">Custom workflows</div>
+      <p class="guide-section-sub">The <code class="inline">WORKFLOW</code> array defines your entire lifecycle. States and milestones must alternate. RoadmapSnap calculates each deliverable's current status by comparing milestone dates to today.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>WORKFLOW: [
+```
+
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘NS’</span>,   title: <span class="cs">‘Not Started’</span>     },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘START’</span>, title: <span class="cs">‘Kickoff’</span>,      color: <span class="cs">’#7C3AED’</span> },
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘BUILD’</span>, title: <span class="cs">‘In Build’</span>        },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘M1’</span>,    title: <span class="cs">‘Build Complete’</span>, color: <span class="cs">’#059669’</span> },
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘TEST’</span>,  title: <span class="cs">‘In Testing’</span>      },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘M2’</span>,    title: <span class="cs">‘Test Sign-off’</span>,  color: <span class="cs">’#D97706’</span> },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘GO’</span>,    title: <span class="cs">‘Go Live’</span>,       color: <span class="cs">’#DC2626’</span> },
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘DONE’</span>,  title: <span class="cs">‘Done’</span>            }
+]</pre>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>The keys become your milestone names</h4>
+<p>Whatever you set as <code class="inline">key</code> in a milestone workflow entry is what you use in each deliverable’s <code class="inline">milestones</code> object. You can rename them to anything — M0/M1/M2, KICKOFF/BUILD/UAT/GOLIVE, or any other convention.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Timeline ── -->
+    <div class="guide-section" id="g-timeline">
+      <div class="guide-section-title">Timeline settings</div>
+      <p class="guide-section-sub">Control the visible date range and the today marker. Leave <code class="inline">TODAY</code> empty to auto-detect from the system clock.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>TIMELINE: {
+```
+
+<span class="ck">TODAY</span>:       <span class="cs">“16/02/2026”</span>,  <span class="cm">// DD/MM/YYYY  or “” for auto</span>
+<span class="ck">START_MONTH</span>: <span class="cs">“01/2026”</span>,     <span class="cm">// MM/YYYY — left edge of Gantt</span>
+<span class="ck">END_MONTH</span>:   <span class="cs">“12/2026”</span>      <span class="cm">// MM/YYYY — right edge of Gantt</span>
+}</pre>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>Set TODAY manually for static presentations</h4>
+<p>If you’re exporting to PNG for a board pack or status report, set <code class="inline">TODAY</code> to a fixed date so the today-line appears in exactly the right place in the export, regardless of when it’s opened.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Labels ── -->
+    <div class="guide-section" id="g-labels">
+      <div class="guide-section-title">Custom labels &amp; branding</div>
+      <p class="guide-section-sub">Change the vocabulary of the dashboard to match your program. Replace "Feature" with "Initiative", "Epic", "Project", or any term your stakeholders use.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>ENTITY_LABELS: {
+```
+
+<span class="ck">singular</span>:   <span class="cs">“Initiative”</span>,
+<span class="ck">plural</span>:     <span class="cs">“Initiatives”</span>,
+<span class="ck">scopeLabel</span>: <span class="cs">“initiatives”</span>   <span class="cm">// lowercase for sentence use</span>
+},
+
+DASHBOARD_TEXT: {
+<span class="ck">title</span>:                <span class="cs">“Digital Transformation 2026”</span>,
+<span class="ck">totalSubtitleSuffix</span>: <span class="cs">“in scope”</span>
+}</pre>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>Branding via CSS</h4>
+<p>For logo and colour changes, edit <code class="inline">css/styles.css</code>. The CSS uses straightforward class names and custom properties — no deep knowledge of the rendering engine needed.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Export ── -->
+    <div class="guide-section" id="g-export">
+      <div class="guide-section-title">Exporting &amp; sharing</div>
+      <p class="guide-section-sub">RoadmapSnap supports three export formats, all accessible from the toolbar inside the dashboard.</p>
+      <ul class="guide-steps">
+        <li><div class="gs-num">📷</div><div class="gs-body"><div class="gs-title">PNG export</div><div class="gs-desc">Captures the current viewport as a clean, high-resolution image. Best for embedding in slide decks, board packs, and status reports. Set a fixed <code class="inline">TODAY</code> date before exporting for reproducible snapshots.</div></div></li>
+        <li><div class="gs-num">📊</div><div class="gs-body"><div class="gs-title">CSV export</div><div class="gs-desc">Exports all deliverable data as a flat table. Useful for feeding into reporting tools, pivot tables, or for audit trails. Includes name, group, milestone dates, status, and flags.</div></div></li>
+        <li><div class="gs-num">{}</div><div class="gs-body"><div class="gs-title">JSON export</div><div class="gs-desc">Full structured export of the rendered state. Use for integration with other tools, archiving point-in-time snapshots, or generating reports programmatically.</div></div></li>
+      </ul>
+      <div class="callout tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <h4>Sharing sensitive roadmaps</h4>
+          <p>For programs with confidential data, use a private GitHub repository and enable GitHub Pages access controls, or deploy to an internal intranet. You can also create a sanitised <code class="inline">config.public.js</code> with only the information safe to share externally.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /guide-content -->
+</div><!-- /guide-intro -->
+```
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ USE CASES -->
+
+<section id="usecases" aria-labelledby="usecases-title">
+  <div class="container">
+    <div class="section-label">Use Cases</div>
+    <h2 id="usecases-title">Who uses RoadmapSnap</h2>
+    <p class="lead">From PMO governance to consulting engagements — wherever a stakeholder-ready roadmap needs to appear fast.</p>
+    <div class="uc-grid">
+      <div class="uc-card fade-in"><div class="uc-icon">🏛️</div><div><h3>PMO Governance</h3><p>Single source of truth across all programs. Export weekly board packs with one click. No more "which version is current?"</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">🔄</div><div><h3>Enterprise Transformation</h3><p>Multi-stream programs with complex cross-dependencies. Keep executives aligned on the critical path without a 40-slide deck.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">☁️</div><div><h3>Data Platform Migration</h3><p>Track schema discovery, ETL pipelines, data quality rules, and analytics delivery with clear milestone accountability.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">⚙️</div><div><h3>ERP &amp; Platform Upgrades</h3><p>Long-running programs with formal phase gates. Surface at-risk workstreams before they become programme blockers.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">📋</div><div><h3>Consulting Roadmaps</h3><p>White-label via CSS. Deliver polished client presentations without SaaS licenses or lengthy procurement processes.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">📈</div><div><h3>Portfolio Reporting</h3><p>Filter by group, status, or risk to surface what needs attention. One config file per portfolio item, one folder per programme.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ INSTALLATION -->
+
+<section id="installation" aria-labelledby="install-title">
+  <div class="container">
+    <div class="section-label">Installation</div>
+    <h2 id="install-title">Up and running in <em>60 seconds</em></h2>
+    <p class="lead">Three deployment options. None of them require a build tool, a server, or a package manager.</p>
+    <div class="install-grid">
+      <div class="install-card fade-in">
+        <h3>⌨️ Local — fastest start</h3>
+        <p style="font-size:.84rem;color:var(--muted);margin-bottom:10px;font-weight:300">Clone and open in any browser. Zero setup.</p>
+        <div class="code-block">
+<span class="cmt"># Clone</span>
+<span class="cmd">git clone https://github.com/</span>
+<span class="cmd">  moises-prat-epm/RoadmapSnap</span>
+<span class="cmd">cd RoadmapSnap</span>
+
+<span class="cmt"># Open directly</span>
+<span class="cmd">open index.html</span>        <span class="cmt"># macOS</span>
+<span class="cmd">start index.html</span>      <span class="cmt"># Windows</span>
+
+</div>
+        <p style="font-size:.78rem;color:var(--subtle);font-weight:300">Edit <code class="inline">js/config.js</code> → refresh → done.</p>
+      </div>
+      <div class="install-card fade-in">
+        <h3>🌐 Cloudflare Pages — free global CDN</h3>
+        <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;font-weight:300">No build command needed.</p>
+        <div class="ist"><div class="ist-n">1</div><span>Fork or push the repo to your GitHub account</span></div>
+        <div class="ist"><div class="ist-n">2</div><span>Go to <strong>Cloudflare Pages</strong> → Connect to Git</span></div>
+        <div class="ist"><div class="ist-n">3</div><span>Select your repo and branch</span></div>
+        <div class="ist"><div class="ist-n">4</div><span>Leave <em>Build command</em> empty</span></div>
+        <div class="ist"><div class="ist-n">5</div><span>Set root directory <code class="inline">/</code> → Deploy</span></div>
+      </div>
+      <div class="install-card fade-in">
+        <h3>🐙 GitHub Pages — free from your repo</h3>
+        <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;font-weight:300">Directly from your repository.</p>
+        <div class="ist"><div class="ist-n">1</div><span>Push the repo to your GitHub account</span></div>
+        <div class="ist"><div class="ist-n">2</div><span>Go to <strong>Settings → Pages</strong></span></div>
+        <div class="ist"><div class="ist-n">3</div><span>Select branch <code class="inline">main</code> as source</span></div>
+        <div class="ist"><div class="ist-n">4</div><span>Live at <code class="inline">username.github.io/RoadmapSnap/</code></span></div>
+        <p style="font-size:.77rem;color:var(--subtle);margin-top:10px;font-weight:300">Use a private repo + Pages for sensitive programme data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FAQ -->
+
+<section id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 id="faq-title">Common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">What is a roadmap visualization tool?<i class="faq-ch">▾</i></button><div class="faq-a">A roadmap visualization tool converts project plans into interactive visual dashboards. RoadmapSnap renders Gantt timelines, milestones, and dependency graphs entirely in the browser from a single JavaScript config file — no server, no database, no build step.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">How do I add a deliverable to the roadmap?<i class="faq-ch">▾</i></button><div class="faq-a">Add an object to the <code>DELIVERABLES</code> array in <code>js/config.js</code> with at minimum a unique <code>name</code> and a <code>milestones</code> object containing your key-date pairs. Save and refresh the browser — the new row appears immediately.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">How do dependencies work in the graph view?<i class="faq-ch">▾</i></button><div class="faq-a">Add a <code>dependencies</code> array to any deliverable. Use a plain string (matching another deliverable's exact name) for a simple last-milestone-to-M0 link, or use an object <code>{task, from, to}</code> to link specific milestones. RoadmapSnap renders a recursive directed graph with arrows automatically.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Can I link deliverables to Jira or Confluence?<i class="faq-ch">▾</i></button><div class="faq-a">Yes. Set the <code>link</code> field on any deliverable to any HTTPS URL. An info icon appears on that row in the timeline — clicking it opens the URL in a new tab. Works with Jira epics, Confluence pages, Google Drive documents, SharePoint folders, or any other link.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Can I deploy RoadmapSnap on Cloudflare Pages?<i class="faq-ch">▾</i></button><div class="faq-a">Yes. Connect your GitHub repository to Cloudflare Pages, select your branch, leave the build command empty (no build step needed), set root directory to <code>/</code>, and deploy. Global CDN is included at no cost.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Is RoadmapSnap free for commercial use?<i class="faq-ch">▾</i></button><div class="faq-a">Yes — MIT License. Use, modify, and distribute freely for personal or commercial projects with no restrictions.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CTA -->
+
+<section id="cta" aria-labelledby="cta-title">
+  <div class="container">
+    <h2 id="cta-title">Your roadmap, clear in minutes</h2>
+    <p class="lead">No backend. No build step. No license fees. Clone, configure, and ship a stakeholder-ready dashboard today.</p>
+    <div class="cta-actions">
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener" class="btn-white">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
+      <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener" class="btn-ghost-white">Open live demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span class="nav-logo-dot"></span>RoadmapSnap</div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener">GitHub</a>
+      <a href="#guide">User Guide</a>
+      <a href="#features">Features</a>
+      <a href="#installation">Installation</a>
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+    </nav>
+    <div class="footer-copy">© 2026 RoadmapSnap. Open source under MIT License. Built for program managers who deserve better tools.</div>
+  </div>
+</footer>
+
+<script>
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  }
+
+  // Scroll-based fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.06 + 's';
+    obs.observe(el);
+  });
+
+  // Guide TOC active link on scroll
+  const guideSections = document.querySelectorAll('.guide-section[id]');
+  const tocLinks = document.querySelectorAll('.guide-toc-list a');
+  const tocObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.guide-toc-list a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  guideSections.forEach(s => tocObs.observe(s));
+</script>
+
+</body>
+</html>
