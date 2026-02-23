@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap helps search engines discover and index your pages
+Sitemap: https://roadmapsnapweb.pages.dev/sitemap.xml
