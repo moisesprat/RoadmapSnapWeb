@@ -20,7 +20,7 @@
   <meta name="twitter:title" content="RoadmapSnap — Visual Roadmap Dashboards, No Backend" />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview.png" />
   <meta name="google-site-verification" content="HSetvDhVoJznKAJj5xDpC5Wr8t3lzox-IfHHlvQJtvM" />
-
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -45,17 +45,742 @@
     <li><a href="#installation">Install</a></li>
     <li>
       <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener" class="nav-gh">
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
     </li>
   </ul>
 </nav>
 
-<!-- Extra reference to author's web page -->
+<!-- ═══════════════════════════════════════════════ HERO -->
+
+<section id="hero" aria-labelledby="hero-title">
+  <div class="hero-blob-1" aria-hidden="true"></div>
+  <div class="hero-blob-2" aria-hidden="true"></div>
+  <div class="hero-layout">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-badge">Open Source</span>
+        MIT License · No backend required
+      </div>
+      <h1 id="hero-title">Roadmap dashboards that<br>your stakeholders <em>actually read</em></h1>
+      <p class="hero-sub">RoadmapSnap turns a single config file into a live Gantt dashboard with milestones, dependency graphs, KPI cards, and one-click exports. Edit and refresh — no build step, ever.</p>
+      <div class="hero-actions">
+        <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+        <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener" class="btn-outline">Live demo →</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">0 <span style="font-family:var(--font-body);font-size:1rem;color:var(--muted);font-weight:300">build steps</span></div><div class="stat-label">Open in browser immediately</div></div>
+        <div><div class="stat-val">1 <span style="font-family:var(--font-body);font-size:1rem;color:var(--muted);font-weight:300">file to edit</span></div><div class="stat-label">config.js controls everything</div></div>
+        <div><div class="stat-val">MIT <span style="font-family:var(--font-body);font-size:1rem;color:var(--muted);font-weight:300">licensed</span></div><div class="stat-label">Free for commercial use</div></div>
+      </div>
+    </div>
+    <!-- Real screenshot from repo -->
+    <div>
+      <div class="hero-shot">
+        <div class="shot-bar">
+          <div class="shot-dot r"></div><div class="shot-dot y"></div><div class="shot-dot g"></div>
+          <div class="shot-url">roadmapsnap.pages.dev</div>
+        </div>
+        <img
+          src="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview-small.png"
+          alt="RoadmapSnap dashboard: KPI cards, Gantt timeline with milestone diamonds, and grouped workstreams"
+          loading="eager"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="shot-fallback">
+          <span>Screenshot loads on the deployed page</span>
+          <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener">Open live demo ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ PROBLEM -->
+
+<section id="problem" aria-labelledby="problem-title">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2 id="problem-title">Program roadmaps fail before they're presented</h2>
+    <p class="lead">The tools exist. The problem is that none of them are fast, free, and stakeholder-ready without IT involvement.</p>
+    <div class="problem-grid">
+      <div class="problem-card fade-in"><div class="p-icon">🗂️</div><h3>Spreadsheet entropy</h3><p>Excel timelines collapse under real program complexity. Dates drift, formulas break, and the "latest version" is never the one being shown.</p></div>
+      <div class="problem-card fade-in"><div class="p-icon">🔗</div><h3>Hidden dependencies</h3><p>Blocking relationships between workstreams live in someone's head or buried in meeting notes — never in the roadmap itself.</p></div>
+      <div class="problem-card fade-in"><div class="p-icon">📊</div><h3>Executive translation gap</h3><p>What you track in detail and what leadership needs to see are two different things. Most tools force you to maintain both separately.</p></div>
+      <div class="problem-card fade-in"><div class="p-icon">🔧</div><h3>Infrastructure overhead</h3><p>SaaS tools need procurement, licenses, and IT onboarding. You want a roadmap dashboard, not a six-week setup project.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FEATURES -->
+
+<section id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-label">Features</div>
+    <h2 id="features-title">Everything in one <em>config file</em></h2>
+    <p class="lead">Define deliverables, milestones, dependencies, and metadata in <code class="inline">js/config.js</code>. RoadmapSnap renders the rest.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-in"><div class="f-icon">🎯</div><h3>Configurable workflow</h3><p>Define any lifecycle as alternating states and milestones. Status auto-calculates — no manual updates after initial setup.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">🔗</div><h3>Dependency graph</h3><p>Recursive dependency visualization with directional arrows. Simple strings or precise milestone-to-milestone links.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">📅</div><h3>Gantt timeline</h3><p>3, 6, or 12-month zoom. Milestone diamonds overlaid on bars. Group rows, sort, filter, and search — all in-browser.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">📤</div><h3>Export to PNG / CSV / JSON</h3><p>Presentation-ready snapshot in one click. No screen capture required — the export is clean and properly sized.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">📊</div><h3>Executive KPI cards</h3><p>Auto-tallied counts of total, in-progress, done, and at-risk items. Click any card to filter the timeline instantly.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">🏷️</div><h3>Tags &amp; search</h3><p>Attach tags to deliverables and search across the full roadmap in real time. Filter by team, priority, or any custom label.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">⚠️</div><h3>Risk &amp; descope flags</h3><p>Mark items as at-risk or descoped. Visual indicators surface problems immediately — no need to read through every row.</p></div>
+      <div class="feature-card fade-in"><div class="f-icon">🔒</div><h3>Works offline &amp; privately</h3><p>No data leaves your machine. Run from a shared drive, internal intranet, or private GitHub repo for sensitive programs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ SCREENSHOTS -->
+
+<section id="screenshots" aria-labelledby="screenshots-title">
+  <div class="container">
+    <div class="section-label">Real Tool · Real Screens</div>
+    <h2 id="screenshots-title">The actual dashboard</h2>
+    <p class="lead">No mock-ups. This is a live screenshot from a deployed RoadmapSnap instance.</p>
+
+```
+<div class="screen-card fade-in">
+  <div class="screen-hdr">
+    <div class="dots"><div class="shot-dot r"></div><div class="shot-dot y"></div><div class="shot-dot g"></div></div>
+    <span class="screen-hdr-title">RoadmapSnap — Main Dashboard View</span>
+    <span class="screen-hdr-tag">Live Preview</span>
+  </div>
+  <img
+    src="https://raw.githubusercontent.com/moises-prat-epm/RoadmapSnap/main/docs/preview.png"
+    alt="Full RoadmapSnap dashboard: KPI summary cards, interactive Gantt timeline with coloured deliverable bars, milestone diamond markers, group streams, and today-line indicator"
+    loading="lazy"
+    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+  />
+  <div class="screen-img-err">
+    <span>Screenshot loads on the deployed page</span>
+    <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener">Open live demo ↗</a>
+  </div>
+  <div class="screen-feats">
+    <div class="sf">Auto-calculated KPI cards</div>
+    <div class="sf">Milestone diamond markers</div>
+    <div class="sf">Group / stream rows</div>
+    <div class="sf">Today-line indicator</div>
+    <div class="sf">Click-to-filter KPIs</div>
+    <div class="sf">At-risk visual flags</div>
+  </div>
+</div>
+
+<div class="demo-strip fade-in">
+  <div>
+    <h3>Explore the full interactive experience</h3>
+    <p>Dependency graph, dark mode, export panel, timeline zoom, filter bar — all live.</p>
+  </div>
+  <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener" class="btn-primary" style="flex-shrink:0">Open live demo →</a>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ HOW IT WORKS -->
+
+<section id="how" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 id="how-title">How it works</h2>
+    <p class="lead">One config file. One HTML file. Everything else is rendered in the browser.</p>
+    <div class="steps-grid">
+      <div class="step-card fade-in"><div class="step-num">1</div><h3>Edit config.js</h3><p>Define deliverables, groups, milestone dates, dependencies, and metadata. Use the sample project to learn the format.</p></div>
+      <div class="step-card fade-in"><div class="step-num">2</div><h3>Configure your workflow</h3><p>Set up the lifecycle that matches your program — states, milestones, colors, and labels are all yours to define.</p></div>
+      <div class="step-card fade-in"><div class="step-num">3</div><h3>Open index.html</h3><p>The engine reads your config and renders KPI cards, Gantt timeline, and dependency graph. No server, no compile step.</p></div>
+      <div class="step-card fade-in"><div class="step-num">4</div><h3>Deploy anywhere</h3><p>GitHub Pages, Cloudflare Pages, Netlify, shared drive, or internal intranet. Static HTML goes everywhere.</p></div>
+    </div>
+    <div class="workflow-viz" aria-label="Example milestone lifecycle">
+      <div class="wf-node"><div class="wf-bubble" style="background:#CBD5E1">NS</div><div class="wf-name">Not Started</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#7C3AED">M0</div><div class="wf-name">Dev Start<div class="wf-sub">Kickoff</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#2563EB">DEV</div><div class="wf-name">In Dev</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#059669">M1</div><div class="wf-name">Dev Complete<div class="wf-sub">Code freeze</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#D97706">M2</div><div class="wf-name">UAT Complete<div class="wf-sub">Signed off</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#DC2626">M3</div><div class="wf-name">Production<div class="wf-sub">Go live</div></div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-node"><div class="wf-bubble" style="background:#16A34A">✓</div><div class="wf-name">Done</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ USER GUIDE -->
+
+<section id="guide" aria-labelledby="guide-title">
+  <div class="container">
+    <div class="section-label">User Guide</div>
+    <h2 id="guide-title">Complete configuration <em>reference</em></h2>
+    <p class="lead">Everything you need to go from a blank template to a fully working program roadmap, step by step.</p>
+
+```
+<div class="guide-intro">
+  <!-- Sticky TOC -->
+  <aside>
+    <div class="guide-toc">
+      <div class="guide-toc-title">In this guide</div>
+      <ul class="guide-toc-list">
+        <li><a href="#g-structure">Project structure</a></li>
+        <li><a href="#g-deliverables">Defining deliverables</a></li>
+        <li><a href="#g-milestones">Setting milestones</a></li>
+        <li><a href="#g-dependencies">Tracking dependencies</a></li>
+        <li><a href="#g-tags">Tagging for search</a></li>
+        <li><a href="#g-links">Linking to Jira / Confluence</a></li>
+        <li><a href="#g-risk">Risk &amp; descope flags</a></li>
+        <li><a href="#g-groups">Groups &amp; ordering</a></li>
+        <li><a href="#g-workflow">Custom workflows</a></li>
+        <li><a href="#g-timeline">Timeline settings</a></li>
+        <li><a href="#g-labels">Custom labels</a></li>
+        <li><a href="#g-export">Exporting &amp; sharing</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="guide-content">
+
+    <!-- ── Project Structure ── -->
+    <div class="guide-section" id="g-structure">
+      <div class="guide-section-title">Project structure</div>
+      <p class="guide-section-sub">After cloning, you'll find two starter config files. Use <code class="inline">config_base.js</code> as your blank slate and <code class="inline">config.js</code> as a fully populated reference.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">repository root</span><span class="code-lang">tree</span></div>
+        <pre>RoadmapSnap/
+```
+
+├── index.html          <span class="cm"># the rendering engine — never edit this</span>
+├── js/
+│   ├── config.js       <span class="cm"># ← your roadmap lives here</span>
+│   └── config_base.js  <span class="cm"># blank template to start from</span>
+├── css/                <span class="cm"># styles (customise for branding)</span>
+└── docs/
+└── preview.png</pre>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>Start from the base template</h4>
+<p>Copy <code class="inline">config_base.js</code> over <code class="inline">config.js</code> to start clean. Study <code class="inline">config.js</code> (the e-commerce sample) whenever you need a working example of any feature.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Deliverables ── -->
+    <div class="guide-section" id="g-deliverables">
+      <div class="guide-section-title">Defining deliverables</div>
+      <p class="guide-section-sub">Each item in the <code class="inline">DELIVERABLES</code> array represents one row in your timeline. The only two required fields are <code class="inline">name</code> and <code class="inline">milestones</code>.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>DELIVERABLES: [
+```
+
+{
+<span class="ck">name</span>:  <span class="cs">“User Authentication”</span>,  <span class="cm">// required — must be unique</span>
+<span class="ck">group</span>: <span class="cs">“Backend”</span>,             <span class="cm">// optional — groups rows together</span>
+<span class="ck">milestones</span>: {              <span class="cm">// required — at least one date</span>
+M0: <span class="cs">“01/03/2026”</span>,
+M1: <span class="cs">“30/03/2026”</span>,
+M3: <span class="cs">“01/05/2026”</span>
+}
+}
+]</pre>
+</div>
+<table class="guide-table">
+<thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>name</code></td><td>string</td><td><span class="tag-req">Required</span></td><td>Unique identifier and label shown in the timeline row</td></tr>
+<tr><td><code>group</code></td><td>string</td><td><span class="tag-opt">Optional</span></td><td>Organises rows under a labelled group/stream header</td></tr>
+<tr><td><code>milestones</code></td><td>object</td><td><span class="tag-req">Required</span></td><td>Key-value pairs of milestone key → date (DD/MM/YYYY)</td></tr>
+<tr><td><code>showInTimeline</code></td><td>boolean</td><td><span class="tag-opt">Optional</span></td><td>Set to <code>false</code> to hide the row from the Gantt (default: true)</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Milestones ── -->
+    <div class="guide-section" id="g-milestones">
+      <div class="guide-section-title">Setting milestones</div>
+      <p class="guide-section-sub">Milestone keys must match the keys defined in your <code class="inline">WORKFLOW</code>. Status (Not Started / In Dev / Done / etc.) is <strong>automatically calculated</strong> at runtime based on which milestone dates have passed relative to today.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre><span class="cm">// Milestones use DD/MM/YYYY format</span>
+```
+
+milestones: {
+M0: <span class="cs">“01/03/2026”</span>,   <span class="cm">// Dev kickoff</span>
+M1: <span class="cs">“28/03/2026”</span>,   <span class="cm">// Dev complete</span>
+M2: <span class="cs">“18/04/2026”</span>,   <span class="cm">// UAT signed off</span>
+M3: <span class="cs">“05/05/2026”</span>    <span class="cm">// Go live — you don’t need all milestones</span>
+}</pre>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>You don’t need every milestone</h4>
+<p>A deliverable only needs the milestone dates that are relevant to it. If an item has no <code class="inline">M2</code> date it will simply skip from M1 to M3 in the status calculation.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Dependencies ── -->
+    <div class="guide-section" id="g-dependencies">
+      <div class="guide-section-title">Tracking dependencies</div>
+      <p class="guide-section-sub">Dependencies tell RoadmapSnap which deliverables are blocked by others. They are visualised as a recursive arrow graph in the dependency view. There are two ways to define them.</p>
+
+      <div class="guide-2col">
+        <div class="mini-card">
+          <h4>Simple dependency</h4>
+          <p>A string with another deliverable's exact name. Links the <em>last milestone</em> of that deliverable to the <em>start (M0)</em> of this one.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Advanced dependency</h4>
+          <p>An object with <code class="inline">task</code>, <code class="inline">from</code>, and <code class="inline">to</code> to link specific milestones between two deliverables.</p>
+        </div>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“API Gateway”</span>,
+dependencies: [
+
+```
+<span class="cm">// Simple: "Database Setup" M3 → "API Gateway" M0</span>
+<span class="cs">"Database Setup"</span>,
+
+<span class="cm">// Advanced: "Auth Service" M1 must complete before</span>
+<span class="cm">// "API Gateway" M1 can start</span>
+{ <span class="ck">task</span>: <span class="cs">"Auth Service"</span>, <span class="ck">from</span>: <span class="cs">"M1"</span>, <span class="ck">to</span>: <span class="cs">"M1"</span> },
+
+<span class="cm">// Another example: DB migration M2 → this item's M1</span>
+{ <span class="ck">task</span>: <span class="cs">"DB Migration"</span>, <span class="ck">from</span>: <span class="cs">"M2"</span>, <span class="ck">to</span>: <span class="cs">"M1"</span> }
+```
+
+],
+milestones: { M0: <span class="cs">“15/03/2026”</span>, M1: <span class="cs">“20/04/2026”</span>, M3: <span class="cs">“10/05/2026”</span> }
+}</pre>
+</div>
+
+```
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Names must match exactly</h4>
+          <p>The <code class="inline">task</code> string (or the simple string) must be the exact <code class="inline">name</code> of another deliverable in the same config — including case and spacing. A mismatch silently omits the dependency arrow.</p>
+        </div>
+      </div>
+
+      <ul class="guide-steps">
+        <li><div class="gs-num">1</div><div class="gs-body"><div class="gs-title">Identify the blocking deliverable</div><div class="gs-desc">Find the deliverable whose completion gates another one. Note its exact <code class="inline">name</code> value.</div></div></li>
+        <li><div class="gs-num">2</div><div class="gs-body"><div class="gs-title">Choose simple or advanced</div><div class="gs-desc">Use a plain string if the default "last milestone → M0" link is sufficient. Use the object form to connect specific milestones.</div></div></li>
+        <li><div class="gs-num">3</div><div class="gs-body"><div class="gs-title">Add to the dependencies array</div><div class="gs-desc">You can mix strings and objects freely in the same array. Multiple dependencies per deliverable are fully supported.</div></div></li>
+        <li><div class="gs-num">4</div><div class="gs-body"><div class="gs-title">Check the dependency view</div><div class="gs-desc">Reload and switch to the dependency graph tab. Arrows will appear between the linked milestones, and blocked items will be highlighted.</div></div></li>
+      </ul>
+    </div>
+    <hr class="guide-rule" />
+
+    <!-- ── Tags ── -->
+    <div class="guide-section" id="g-tags">
+      <div class="guide-section-title">Tagging deliverables for easy search</div>
+      <p class="guide-section-sub">Tags are free-form strings attached to any deliverable. They make the real-time search bar significantly more useful — especially when a program has 40+ rows.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“Payment Processing”</span>,
+<span class="ck">tags</span>: [<span class="cs">“P0”</span>, <span class="cs">“finance”</span>, <span class="cs">“external-vendor”</span>, <span class="cs">“PCI-DSS”</span>],
+milestones: { M0: <span class="cs">“01/04/2026”</span>, M1: <span class="cs">“30/04/2026”</span> }
+}</pre>
+</div>
+<div class="guide-2col">
+<div class="mini-card"><h4>🏷️ Priority tags</h4><p>Use <code class="inline">“P0”</code>, <code class="inline">“P1”</code> to quickly filter by business priority. Search “P0” to see all critical items.</p></div>
+<div class="mini-card"><h4>👥 Team tags</h4><p>Add the owning team: <code class="inline">“platform-team”</code>, <code class="inline">“data-eng”</code>. Filter the roadmap to one team’s scope instantly.</p></div>
+<div class="mini-card"><h4>📦 Domain tags</h4><p>Label by domain: <code class="inline">“security”</code>, <code class="inline">“frontend”</code>, <code class="inline">“compliance”</code>. Useful for cross-functional reporting.</p></div>
+<div class="mini-card"><h4>🔗 Integration tags</h4><p>Mark external dependencies: <code class="inline">“vendor-X”</code>, <code class="inline">“API-v2”</code>. Filter to see all third-party blocked items at once.</p></div>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>Search works across names AND tags</h4>
+<p>The search bar in the dashboard finds matches in both the deliverable <code class="inline">name</code> and its <code class="inline">tags</code> array simultaneously. You don’t need to be precise — partial matches work.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Links ── -->
+    <div class="guide-section" id="g-links">
+      <div class="guide-section-title">Linking to Jira, Confluence &amp; other tools</div>
+      <p class="guide-section-sub">The <code class="inline">link</code> field attaches a clickable icon to any deliverable row in the timeline. Use it to point directly to the Jira epic, Confluence page, or any other URL relevant to that item.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“Data Warehouse Setup”</span>,
+tags: [<span class="cs">“data-eng”</span>, <span class="cs">“P0”</span>],
+
+<span class="cm">// Links to a Jira epic</span>
+<span class="ck">link</span>: <span class="cs">“https://your-org.atlassian.net/browse/DATA-142”</span>,
+
+milestones: { M0: <span class="cs">“01/02/2026”</span>, M1: <span class="cs">“28/02/2026”</span> }
+},
+{
+name: <span class="cs">“Auth & SSO”</span>,
+
+<span class="cm">// Links to a Confluence design doc</span>
+<span class="ck">link</span>: <span class="cs">“https://your-org.atlassian.net/wiki/spaces/ARCH/pages/123456”</span>,
+
+milestones: { M0: <span class="cs">“10/02/2026”</span>, M1: <span class="cs">“15/03/2026”</span>, M3: <span class="cs">“01/04/2026”</span> }
+}</pre>
+</div>
+<div class="guide-2col">
+<div class="mini-card"><h4>🎫 Jira epics & stories</h4><p>Link directly to the epic or story covering this deliverable. Stakeholders can drill in without asking the PM for the ticket number.</p></div>
+<div class="mini-card"><h4>📄 Confluence pages</h4><p>Point to the design document, PRD, or decision log. Makes the roadmap a genuine entry point to all program artefacts.</p></div>
+<div class="mini-card"><h4>📁 SharePoint / Drive</h4><p>Any HTTPS URL works — SharePoint folders, Google Drive docs, Monday boards, Notion pages.</p></div>
+<div class="mini-card"><h4>🔗 One link per deliverable</h4><p>Only one <code class="inline">link</code> is supported per row. Use the most useful destination — typically the Jira epic or the Confluence spec page.</p></div>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>The icon appears inline in the timeline row</h4>
+<p>When a <code class="inline">link</code> is set, a small info icon appears next to the deliverable name. Clicking it opens the URL in a new tab. It doesn’t affect the bar or milestone rendering.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Risk & Descope ── -->
+    <div class="guide-section" id="g-risk">
+      <div class="guide-section-title">Risk &amp; descope flags</div>
+      <p class="guide-section-sub">Two boolean flags let you surface delivery risk and scope changes visually — without touching the Gantt bars or milestone dates.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>{
+```
+
+name: <span class="cs">“Mobile App v2”</span>,
+<span class="ck">atRisk</span>:   <span class="cv">true</span>,   <span class="cm">// shows a ⚠️ risk indicator on the row</span>
+<span class="ck">descoped</span>: <span class="cv">false</span>,  <span class="cm">// strikes through and greys out the row</span>
+milestones: { M0: <span class="cs">“01/05/2026”</span>, M1: <span class="cs">“30/06/2026”</span> }
+},
+{
+name: <span class="cs">“Legacy Portal Shutdown”</span>,
+<span class="ck">atRisk</span>:   <span class="cv">false</span>,
+<span class="ck">descoped</span>: <span class="cv">true</span>,   <span class="cm">// removed from scope — shown crossed out</span>
+milestones: { M0: <span class="cs">“01/03/2026”</span> }
+}</pre>
+</div>
+<div class="guide-2col">
+<div class="mini-card"><h4>⚠️ atRisk: true</h4><p>Adds a visible risk indicator to the timeline row. The item still counts in the “at risk” KPI card. Click the KPI card to filter to all at-risk items.</p></div>
+<div class="mini-card"><h4>🚫 descoped: true</h4><p>Strikes through the row and renders it grey. The item is still visible (useful for auditing scope changes) but excluded from active KPI counts.</p></div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Groups ── -->
+    <div class="guide-section" id="g-groups">
+      <div class="guide-section-title">Groups &amp; ordering</div>
+      <p class="guide-section-sub">Groups organise the timeline into labelled stream sections. Use <code class="inline">GROUP_ORDER</code> to control how they appear top-to-bottom. Groups not listed will appear alphabetically after the explicitly ordered ones.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre><span class="cm">// Controls top-to-bottom stream order in the timeline</span>
+```
+
+<span class="ck">GROUP_ORDER</span>: [<span class="cs">“Data Platform”</span>, <span class="cs">“Integration”</span>, <span class="cs">“Frontend”</span>, <span class="cs">“Infrastructure”</span>],
+
+<span class="cm">// Groups listed here won’t appear in the filter dropdown</span>
+<span class="ck">NON_FILTERABLE_GROUPS</span>: [<span class="cs">“Infrastructure”</span>, <span class="cs">“Planning”</span>]</pre>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>Use NON_FILTERABLE_GROUPS for overhead items</h4>
+<p>Infrastructure, planning, and governance work often shouldn’t appear in team-level filters. Add these group names to <code class="inline">NON_FILTERABLE_GROUPS</code> and they’ll always show but won’t appear as filter options.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Workflow ── -->
+    <div class="guide-section" id="g-workflow">
+      <div class="guide-section-title">Custom workflows</div>
+      <p class="guide-section-sub">The <code class="inline">WORKFLOW</code> array defines your entire lifecycle. States and milestones must alternate. RoadmapSnap calculates each deliverable's current status by comparing milestone dates to today.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>WORKFLOW: [
+```
+
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘NS’</span>,   title: <span class="cs">‘Not Started’</span>     },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘START’</span>, title: <span class="cs">‘Kickoff’</span>,      color: <span class="cs">’#7C3AED’</span> },
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘BUILD’</span>, title: <span class="cs">‘In Build’</span>        },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘M1’</span>,    title: <span class="cs">‘Build Complete’</span>, color: <span class="cs">’#059669’</span> },
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘TEST’</span>,  title: <span class="cs">‘In Testing’</span>      },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘M2’</span>,    title: <span class="cs">‘Test Sign-off’</span>,  color: <span class="cs">’#D97706’</span> },
+{ type: <span class="cs">‘milestone’</span>, key: <span class="cs">‘GO’</span>,    title: <span class="cs">‘Go Live’</span>,       color: <span class="cs">’#DC2626’</span> },
+{ type: <span class="cs">‘state’</span>,     key: <span class="cs">‘DONE’</span>,  title: <span class="cs">‘Done’</span>            }
+]</pre>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>The keys become your milestone names</h4>
+<p>Whatever you set as <code class="inline">key</code> in a milestone workflow entry is what you use in each deliverable’s <code class="inline">milestones</code> object. You can rename them to anything — M0/M1/M2, KICKOFF/BUILD/UAT/GOLIVE, or any other convention.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Timeline ── -->
+    <div class="guide-section" id="g-timeline">
+      <div class="guide-section-title">Timeline settings</div>
+      <p class="guide-section-sub">Control the visible date range and the today marker. Leave <code class="inline">TODAY</code> empty to auto-detect from the system clock.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>TIMELINE: {
+```
+
+<span class="ck">TODAY</span>:       <span class="cs">“16/02/2026”</span>,  <span class="cm">// DD/MM/YYYY  or “” for auto</span>
+<span class="ck">START_MONTH</span>: <span class="cs">“01/2026”</span>,     <span class="cm">// MM/YYYY — left edge of Gantt</span>
+<span class="ck">END_MONTH</span>:   <span class="cs">“12/2026”</span>      <span class="cm">// MM/YYYY — right edge of Gantt</span>
+}</pre>
+</div>
+<div class="callout tip">
+<span class="callout-icon">✅</span>
+<div class="callout-body">
+<h4>Set TODAY manually for static presentations</h4>
+<p>If you’re exporting to PNG for a board pack or status report, set <code class="inline">TODAY</code> to a fixed date so the today-line appears in exactly the right place in the export, regardless of when it’s opened.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Labels ── -->
+    <div class="guide-section" id="g-labels">
+      <div class="guide-section-title">Custom labels &amp; branding</div>
+      <p class="guide-section-sub">Change the vocabulary of the dashboard to match your program. Replace "Feature" with "Initiative", "Epic", "Project", or any term your stakeholders use.</p>
+      <div class="code-wrap">
+        <div class="code-top"><span class="code-filename">js/config.js</span><span class="code-lang">javascript</span></div>
+        <pre>ENTITY_LABELS: {
+```
+
+<span class="ck">singular</span>:   <span class="cs">“Initiative”</span>,
+<span class="ck">plural</span>:     <span class="cs">“Initiatives”</span>,
+<span class="ck">scopeLabel</span>: <span class="cs">“initiatives”</span>   <span class="cm">// lowercase for sentence use</span>
+},
+
+DASHBOARD_TEXT: {
+<span class="ck">title</span>:                <span class="cs">“Digital Transformation 2026”</span>,
+<span class="ck">totalSubtitleSuffix</span>: <span class="cs">“in scope”</span>
+}</pre>
+</div>
+<div class="callout info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">
+<h4>Branding via CSS</h4>
+<p>For logo and colour changes, edit <code class="inline">css/styles.css</code>. The CSS uses straightforward class names and custom properties — no deep knowledge of the rendering engine needed.</p>
+</div>
+</div>
+</div>
+<hr class="guide-rule" />
+
+```
+    <!-- ── Export ── -->
+    <div class="guide-section" id="g-export">
+      <div class="guide-section-title">Exporting &amp; sharing</div>
+      <p class="guide-section-sub">RoadmapSnap supports three export formats, all accessible from the toolbar inside the dashboard.</p>
+      <ul class="guide-steps">
+        <li><div class="gs-num">📷</div><div class="gs-body"><div class="gs-title">PNG export</div><div class="gs-desc">Captures the current viewport as a clean, high-resolution image. Best for embedding in slide decks, board packs, and status reports. Set a fixed <code class="inline">TODAY</code> date before exporting for reproducible snapshots.</div></div></li>
+        <li><div class="gs-num">📊</div><div class="gs-body"><div class="gs-title">CSV export</div><div class="gs-desc">Exports all deliverable data as a flat table. Useful for feeding into reporting tools, pivot tables, or for audit trails. Includes name, group, milestone dates, status, and flags.</div></div></li>
+        <li><div class="gs-num">{}</div><div class="gs-body"><div class="gs-title">JSON export</div><div class="gs-desc">Full structured export of the rendered state. Use for integration with other tools, archiving point-in-time snapshots, or generating reports programmatically.</div></div></li>
+      </ul>
+      <div class="callout tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <h4>Sharing sensitive roadmaps</h4>
+          <p>For programs with confidential data, use a private GitHub repository and enable GitHub Pages access controls, or deploy to an internal intranet. You can also create a sanitised <code class="inline">config.public.js</code> with only the information safe to share externally.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /guide-content -->
+</div><!-- /guide-intro -->
+```
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ USE CASES -->
+
+<section id="usecases" aria-labelledby="usecases-title">
+  <div class="container">
+    <div class="section-label">Use Cases</div>
+    <h2 id="usecases-title">Who uses RoadmapSnap</h2>
+    <p class="lead">From PMO governance to consulting engagements — wherever a stakeholder-ready roadmap needs to appear fast.</p>
+    <div class="uc-grid">
+      <div class="uc-card fade-in"><div class="uc-icon">🏛️</div><div><h3>PMO Governance</h3><p>Single source of truth across all programs. Export weekly board packs with one click. No more "which version is current?"</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">🔄</div><div><h3>Enterprise Transformation</h3><p>Multi-stream programs with complex cross-dependencies. Keep executives aligned on the critical path without a 40-slide deck.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">☁️</div><div><h3>Data Platform Migration</h3><p>Track schema discovery, ETL pipelines, data quality rules, and analytics delivery with clear milestone accountability.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">⚙️</div><div><h3>ERP &amp; Platform Upgrades</h3><p>Long-running programs with formal phase gates. Surface at-risk workstreams before they become programme blockers.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">📋</div><div><h3>Consulting Roadmaps</h3><p>White-label via CSS. Deliver polished client presentations without SaaS licenses or lengthy procurement processes.</p></div></div>
+      <div class="uc-card fade-in"><div class="uc-icon">📈</div><div><h3>Portfolio Reporting</h3><p>Filter by group, status, or risk to surface what needs attention. One config file per portfolio item, one folder per programme.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ INSTALLATION -->
+
+<section id="installation" aria-labelledby="install-title">
+  <div class="container">
+    <div class="section-label">Installation</div>
+    <h2 id="install-title">Up and running in <em>60 seconds</em></h2>
+    <p class="lead">Three deployment options. None of them require a build tool, a server, or a package manager.</p>
+    <div class="install-grid">
+      <div class="install-card fade-in">
+        <h3>⌨️ Local — fastest start</h3>
+        <p style="font-size:.84rem;color:var(--muted);margin-bottom:10px;font-weight:300">Clone and open in any browser. Zero setup.</p>
+        <div class="code-block">
+<span class="cmt"># Clone</span>
+<span class="cmd">git clone https://github.com/</span>
+<span class="cmd">  moises-prat-epm/RoadmapSnap</span>
+<span class="cmd">cd RoadmapSnap</span>
+
+<span class="cmt"># Open directly</span>
+<span class="cmd">open index.html</span>        <span class="cmt"># macOS</span>
+<span class="cmd">start index.html</span>      <span class="cmt"># Windows</span>
+
+</div>
+        <p style="font-size:.78rem;color:var(--subtle);font-weight:300">Edit <code class="inline">js/config.js</code> → refresh → done.</p>
+      </div>
+      <div class="install-card fade-in">
+        <h3>🌐 Cloudflare Pages — free global CDN</h3>
+        <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;font-weight:300">No build command needed.</p>
+        <div class="ist"><div class="ist-n">1</div><span>Fork or push the repo to your GitHub account</span></div>
+        <div class="ist"><div class="ist-n">2</div><span>Go to <strong>Cloudflare Pages</strong> → Connect to Git</span></div>
+        <div class="ist"><div class="ist-n">3</div><span>Select your repo and branch</span></div>
+        <div class="ist"><div class="ist-n">4</div><span>Leave <em>Build command</em> empty</span></div>
+        <div class="ist"><div class="ist-n">5</div><span>Set root directory <code class="inline">/</code> → Deploy</span></div>
+      </div>
+      <div class="install-card fade-in">
+        <h3>🐙 GitHub Pages — free from your repo</h3>
+        <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;font-weight:300">Directly from your repository.</p>
+        <div class="ist"><div class="ist-n">1</div><span>Push the repo to your GitHub account</span></div>
+        <div class="ist"><div class="ist-n">2</div><span>Go to <strong>Settings → Pages</strong></span></div>
+        <div class="ist"><div class="ist-n">3</div><span>Select branch <code class="inline">main</code> as source</span></div>
+        <div class="ist"><div class="ist-n">4</div><span>Live at <code class="inline">username.github.io/RoadmapSnap/</code></span></div>
+        <p style="font-size:.77rem;color:var(--subtle);margin-top:10px;font-weight:300">Use a private repo + Pages for sensitive programme data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FAQ -->
+
+<section id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 id="faq-title">Common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">What is a roadmap visualization tool?<i class="faq-ch">▾</i></button><div class="faq-a">A roadmap visualization tool converts project plans into interactive visual dashboards. RoadmapSnap renders Gantt timelines, milestones, and dependency graphs entirely in the browser from a single JavaScript config file — no server, no database, no build step.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">How do I add a deliverable to the roadmap?<i class="faq-ch">▾</i></button><div class="faq-a">Add an object to the <code>DELIVERABLES</code> array in <code>js/config.js</code> with at minimum a unique <code>name</code> and a <code>milestones</code> object containing your key-date pairs. Save and refresh the browser — the new row appears immediately.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">How do dependencies work in the graph view?<i class="faq-ch">▾</i></button><div class="faq-a">Add a <code>dependencies</code> array to any deliverable. Use a plain string (matching another deliverable's exact name) for a simple last-milestone-to-M0 link, or use an object <code>{task, from, to}</code> to link specific milestones. RoadmapSnap renders a recursive directed graph with arrows automatically.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Can I link deliverables to Jira or Confluence?<i class="faq-ch">▾</i></button><div class="faq-a">Yes. Set the <code>link</code> field on any deliverable to any HTTPS URL. An info icon appears on that row in the timeline — clicking it opens the URL in a new tab. Works with Jira epics, Confluence pages, Google Drive documents, SharePoint folders, or any other link.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Can I deploy RoadmapSnap on Cloudflare Pages?<i class="faq-ch">▾</i></button><div class="faq-a">Yes. Connect your GitHub repository to Cloudflare Pages, select your branch, leave the build command empty (no build step needed), set root directory to <code>/</code>, and deploy. Global CDN is included at no cost.</div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Is RoadmapSnap free for commercial use?<i class="faq-ch">▾</i></button><div class="faq-a">Yes — MIT License. Use, modify, and distribute freely for personal or commercial projects with no restrictions.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CTA -->
+
+<section id="cta" aria-labelledby="cta-title">
+  <div class="container">
+    <h2 id="cta-title">Your roadmap, clear in minutes</h2>
+    <p class="lead">No backend. No build step. No license fees. Clone, configure, and ship a stakeholder-ready dashboard today.</p>
+    <div class="cta-actions">
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener" class="btn-white">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
+      <a href="https://roadmapsnap.pages.dev" target="_blank" rel="noopener" class="btn-ghost-white">Open live demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+
 <footer>
-  <p>Author's page: <a href="https://moisesprat.github.io">moisesprat.github.io</a></p>
+  <div class="footer-inner">
+    <div class="footer-logo"><span class="nav-logo-dot"></span>RoadmapSnap</div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap" target="_blank" rel="noopener">GitHub</a>
+      <a href="#guide">User Guide</a>
+      <a href="#features">Features</a>
+      <a href="#installation">Installation</a>
+      <a href="https://github.com/moises-prat-epm/RoadmapSnap/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+    </nav>
+    <div class="footer-copy">© 2026 RoadmapSnap. Open source under MIT License. Built for program managers who deserve better tools.</div>
+  </div>
 </footer>
-<!-- additional unchanged content -->
+
+<script>
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  }
+
+  // Scroll-based fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.06 + 's';
+    obs.observe(el);
+  });
+
+  // Guide TOC active link on scroll
+  const guideSections = document.querySelectorAll('.guide-section[id]');
+  const tocLinks = document.querySelectorAll('.guide-toc-list a');
+  const tocObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.guide-toc-list a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  guideSections.forEach(s => tocObs.observe(s));
+</script>
+
 </body>
 </html>
