@@ -1,1 +1,1 @@
-Author Web Page: [Moises Prat](https://moisesprat.github.io)
+Author Web Page: [Moises Prat](https://moisesprat.dev)
