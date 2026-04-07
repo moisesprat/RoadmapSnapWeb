@@ -782,9 +782,79 @@ DASHBOARD_TEXT: {
   guideSections.forEach(s => tocObs.observe(s));
 </script>
 
+<!-- Custom event tracking -->
+<script>
+(function () {
+  function track(event, props) {
+    if (typeof window.sa_event === 'function') {
+      props ? window.sa_event(event, props) : window.sa_event(event);
+    }
+  }
+
+  // ── CTA / outbound link clicks with section context ──────────────────────
+  document.querySelectorAll('a[target="_blank"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var label = link.textContent.trim().slice(0, 60) || link.getAttribute('aria-label') || 'unknown';
+      var href  = (link.getAttribute('href') || '').slice(0, 120);
+      var sec   = link.closest('section[id], nav, footer');
+      var secId = sec ? (sec.id || sec.tagName.toLowerCase()) : 'page';
+      track('outbound_click', { label: label, href: href, section: secId });
+    });
+  });
+
+  // ── Nav link clicks ───────────────────────────────────────────────────────
+  document.querySelectorAll('nav .nav-links a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      track('nav_click', { label: link.textContent.trim() });
+    });
+  });
+
+  // ── FAQ opens ─────────────────────────────────────────────────────────────
+  var _origToggleFaq = window.toggleFaq;
+  window.toggleFaq = function (btn) {
+    if (btn.getAttribute('aria-expanded') !== 'true') {
+      var q = btn.textContent.replace('▾', '').trim().slice(0, 100);
+      track('faq_open', { question: q });
+    }
+    if (_origToggleFaq) _origToggleFaq(btn);
+  };
+
+  // ── Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────────
+  var _depthsFired = {};
+  window.addEventListener('scroll', function () {
+    var pct = Math.floor(((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100);
+    [25, 50, 75, 100].forEach(function (d) {
+      if (pct >= d && !_depthsFired[d]) {
+        _depthsFired[d] = true;
+        track('scroll_depth', { depth: d });
+      }
+    });
+  }, { passive: true });
+
+  // ── Section visibility (first time each section enters view) ─────────────
+  var _secFired = {};
+  var _secObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && !_secFired[e.target.id]) {
+        _secFired[e.target.id] = true;
+        track('section_view', { section: e.target.id });
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('section[id]').forEach(function (s) { _secObs.observe(s); });
+
+  // ── Guide TOC clicks ──────────────────────────────────────────────────────
+  document.querySelectorAll('.guide-toc-list a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      track('guide_toc_click', { section: link.textContent.trim() });
+    });
+  });
+})();
+</script>
+
 <!-- 100% privacy-first analytics -->
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
-
+<script async src="https://scripts.simpleanalyticscdn.com/auto-events.js"></script>
 </body>
 </html>
