@@ -475,6 +475,8 @@ footer { background: var(--nav-bg); padding: 44px 5vw 28px; }
 .footer-copy { font-size: .75rem; color: rgba(255,255,255,.22); width: 100%; text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.06); font-weight: 300; }
 .footer-copy a { color: rgba(255,255,255,.5); text-decoration: none; }
 .footer-copy a:hover { color: rgba(255,255,255,.85); text-decoration: underline; }
+.footer-badge { width: 100%; display: flex; justify-content: center; }
+.footer-badge img { height: 28px; }
 
 /* ── RESPONSIVE ────────────────────────────────────── */
 @media(max-width:980px) {
